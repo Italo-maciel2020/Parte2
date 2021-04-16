@@ -6,12 +6,13 @@
 #include "putvoxel.h"
 #include "cutvoxel.h"
 #include <iostream>
+#include <vector>
 
 Interpretador::Interpretador(){
 
 }
 
-std::vector<FiguraGeometrica*> Interpretador::parse(std:string filename){
+std::vector<FiguraGeometrica*> Interpretador::parse(std::string filename){
     std::vector<FiguraGeometrica*> figs;
     std::ifstream fin;
     std::stringstream ss;
@@ -42,18 +43,25 @@ std::vector<FiguraGeometrica*> Interpretador::parse(std:string filename){
                  ss >> x0 >> y0 >> z0 >> rr >> r >> g >> b >> a;
                  figs.push_back(new PutSphere(x0,y0,z0,rr,r,g,b,a));
              }
+             else if(token.compare("putellipsoid") == 0){
+                 int x0,y0,z0,rr;
+                 ss >> x0 >> y0 >> z0 >> xcenter >> ycenter >> zcenter >> r >> g >> b >> a;
+                 figs.push_back(new PutEllipsoid(x0,y0,z0,xcenter,ycenter,zcenter,r,g,b,a));
+             }
          }
      }
  }
 return(figs);
 }
-int Intepretador::getDimx(){
+int Interpretador::getDimx(){
     return dimx;
 }
 
 int Interpretador::getDimy(){
     return dimy;
 }
-int Intepretador::getDimz(){
+int Interpretador::getDimz(){
     return dimz;
 }
+
+
